@@ -1,0 +1,14 @@
+name: RustDesk RDP
+on: workflow_dispatch
+
+jobs:
+  start-rdp:
+    runs-on: windows-latest
+    steps:
+      - name: Install RustDesk
+        run: |
+          iwr -useb https://rustdesk.com/install.ps1 | iex
+      - name: Start RustDesk Service
+        run: Start-Process -FilePath "C:\Program Files\RustDesk\RustDesk.exe" -ArgumentList "--service" -NoNewWindow -Wait
+      - name: Output Connection Details
+        run: Get-Content "C:\Program Files\RustDesk\id.txt"
